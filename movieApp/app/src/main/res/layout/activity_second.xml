@@ -67,7 +67,7 @@
             android:background="#808080" />
 
         <TextView
-            android:id="@+id/a_sub_textview_shipping"
+            android:id="@+id/second_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="7dp"
