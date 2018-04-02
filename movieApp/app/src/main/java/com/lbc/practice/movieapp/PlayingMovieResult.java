@@ -1,5 +1,6 @@
 package com.lbc.practice.movieapp;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -88,7 +89,7 @@ public class PlayingMovieResult {
         }
     }
 
-    public static class ResultsBean {
+    public static class ResultsBean implements Serializable {
         /**
          * vote_count : 3635
          * id : 284054

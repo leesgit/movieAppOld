@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity  {
             @Override
             public void onItemClick(int position, PlayingMovieResult.ResultsBean item) {
                 Intent intent = new Intent(getApplicationContext(),SecondActivity.class);
+                intent.putExtra("movieInfo",item);
                 startActivity(intent);
                 overridePendingTransition(R.anim.right_in,R.anim.left_out);
             }

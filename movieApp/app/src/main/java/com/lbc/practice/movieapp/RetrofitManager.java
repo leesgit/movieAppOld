@@ -56,7 +56,7 @@ public class RetrofitManager {
         @GET("/3/movie/now_playing")
         Call<PlayingMovieResult> playingMovie(
                 @Query("api_key") String apiKey,
-                @Query("languate") String language,
+                @Query("language") String language,
                 @Query("pge") int page);
 
     }

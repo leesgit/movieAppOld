@@ -40,7 +40,7 @@ public class PlayingListViewHolder extends RecyclerView.ViewHolder {
     }
     public void setData(PlayingMovieResult.ResultsBean item) {
         Glide.with(itemView.getContext()).load("http://image.tmdb.org/t/p/w185"+item.getPoster_path()).fitCenter().into(ivImage);
-        Log.e("post_path",item.getPoster_path());
+
         tvTitle.setText(item.getTitle());
         tvDate.setText(item.getRelease_date());
         tvScore.setText(item.getVote_average() + "");
