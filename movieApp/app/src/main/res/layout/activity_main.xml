@@ -1,24 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.lbc.practice.movieapp.view.MainActivity">
+    android:id="@+id/main_drawer"
+    android:fitsSystemWindows="true"
+    tools:context="com.lbc.practice.movieapp.view.main.MainActivity"
+    tools:openDrawer="start">
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/main_swiperefreshlayout"
+
+
+    <include
+        layout="@layout/content_main"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context="com.jwk.testapplication1.MainActivity">
+        android:layout_height="match_parent" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/main_recyclerview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+<android.support.design.widget.NavigationView
+    app:menu="@menu/menu_drawer"
+    app:headerLayout="@layout/navigation_header"
+    android:id="@+id/main_drawer_view"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:layout_gravity = "start"/>
 
-    </android.support.v4.widget.SwipeRefreshLayout>
-
-</LinearLayout>
+</android.support.v4.widget.DrawerLayout>

@@ -4,20 +4,23 @@ package="com.lbc.practice.movieapp">
     <uses-permission android:name="android.permission.INTERNET"/>
 
 <application
+    android:name=".MovieApplication"
     android:allowBackup="true"
     android:icon="@mipmap/ic_launcher"
     android:label="@string/app_name"
     android:roundIcon="@mipmap/ic_launcher_round"
     android:supportsRtl="true"
     android:theme="@style/AppTheme">
-    <activity android:name=".view.MainActivity">
+    <activity android:name=".view.main.MainActivity"
+    android:theme="@style/AppTheme.NoActionBar">
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
 
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
     </activity>
-    <activity android:name=".view.SecondActivity"/>
+    <activity android:name=".view.second.SecondActivity"/>
+    <activity android:name=".view.favorite.FavoriteListActivity"/>
 
 </application>
 

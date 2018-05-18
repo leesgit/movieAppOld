@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 
 import com.lbc.practice.movieapp.R;
+import com.lbc.practice.movieapp.view.main.MainActivity;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;

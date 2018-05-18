@@ -1,18 +1,20 @@
 package com.lbc.practice.movieapp;
 
 import com.google.gson.Gson;
+import com.lbc.practice.movieapp.model.PlayingMovieResult;
 
 import java.net.CookieManager;
 import java.net.CookiePolicy;
 import java.util.List;
+import io.reactivex.Observable;
 
 import okhttp3.JavaNetCookieJar;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
-import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /**
@@ -20,9 +22,9 @@ import retrofit2.http.Query;
  */
 
 public class RetrofitManager {
-    private static RetrofitManager instance;
-    private RetrofitUrl url;
-    private RetrofitManager(){
+//     static RetrofitManager instance;
+     RetrofitUrl url;
+     public RetrofitManager(){
         final CookieManager cookieManager = new CookieManager();
         cookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ALL);
         OkHttpClient client = new OkHttpClient.Builder()
@@ -31,19 +33,21 @@ public class RetrofitManager {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(RetrofitUrl.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(new Gson()))
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(client)
                 .build();
         url = retrofit.create(RetrofitUrl.class);
     }
-    public static RetrofitManager getInstance(){
-        if( instance == null ){
-            instance = new RetrofitManager();
-        }
-        return instance;
-    }
-    public static void clearInstance(){
-        instance = null;
-    }
+
+//    public static RetrofitManager getInstance(){
+//        if( instance == null ){
+//            instance = new RetrofitManager();
+//        }
+//        return instance;
+//    }
+//    public static void clearInstance(){
+//        instance = null;
+//    }
 
     public RetrofitUrl getUrl(){
         return url;
@@ -57,7 +61,13 @@ public class RetrofitManager {
         Call<PlayingMovieResult> playingMovie(
                 @Query("api_key") String apiKey,
                 @Query("language") String language,
-                @Query("pge") int page);
+                @Query("page") int page);
+
+        @GET("/3/movie/now_playing")
+        Observable<PlayingMovieResult> rxplayingMovie(
+                @Query("api_key") String apiKey,
+                @Query("language") String language,
+                @Query("page") int page);
 
     }
 }

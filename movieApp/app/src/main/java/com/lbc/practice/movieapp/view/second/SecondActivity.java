@@ -1,28 +1,26 @@
-package com.lbc.practice.movieapp.view;
+package com.lbc.practice.movieapp.view.second;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.TextView;
 
-import com.lbc.practice.movieapp.PlayingMovieResult;
+import com.lbc.practice.movieapp.model.PlayingMovieResult;
 import com.lbc.practice.movieapp.R;
 import com.lbc.practice.movieapp.adapter.ImagePagerAdapter;
-
-import java.util.Locale;
 
 /**
  * Created by lbc on 2018-04-02.
  */
 
-public class SecondActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener{
+public class SecondActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener,SecondContract.SecondView{
 
     private ViewPager viewPager;
     private ImagePagerAdapter imagePagerAdapter;
     private TextView tvPagerCounter, tvTitle, tvGrade, tvStory;
     private int page;
+    SecondPresenter secondPresenter;
 
     PlayingMovieResult.ResultsBean resultsBean;
     @Override
@@ -34,10 +32,10 @@ public class SecondActivity extends AppCompatActivity implements ViewPager.OnPag
         tvGrade = (TextView)findViewById(R.id.second_tv_grade);
         tvStory = (TextView)findViewById(R.id.second_tv_story);
 
+        secondPresenter = new SecondPresenter(this);
         Intent intent =getIntent();
         resultsBean = (PlayingMovieResult.ResultsBean) intent.getSerializableExtra("movieInfo");
 
-        Log.e("test2",resultsBean.getOverview());
         String img[] = new String[2];
         img[0] = "http://image.tmdb.org/t/p/w185"+resultsBean.getPoster_path();
         img[1] = "http://image.tmdb.org/t/p/w185"+resultsBean.getBackdrop_path();
@@ -47,7 +45,7 @@ public class SecondActivity extends AppCompatActivity implements ViewPager.OnPag
         viewPager.setAdapter(imagePagerAdapter);
         viewPager.addOnPageChangeListener(this);
         imagePagerAdapter.setImageUrls(img);
-        displayViewPage(1);
+        secondPresenter.displayViewPage(1);
         imagePagerAdapter.notifyDataSetChanged();
 
         tvTitle.setText(resultsBean.getTitle());
@@ -65,9 +63,9 @@ public class SecondActivity extends AppCompatActivity implements ViewPager.OnPag
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
         if(positionOffset > 0.5){
             if(page != position + 2)
-                displayViewPage(position + 2);
+                secondPresenter.displayViewPage(position+2);
         }else if(page != position + 1){
-            displayViewPage(position + 1);
+            secondPresenter.displayViewPage(position+1);
         }
     }
 
@@ -79,11 +77,17 @@ public class SecondActivity extends AppCompatActivity implements ViewPager.OnPag
     @Override
     public void onPageScrollStateChanged(int state) {
         if(state == ViewPager.SCROLL_STATE_IDLE){
-            displayViewPage(viewPager.getCurrentItem()+1);
+            secondPresenter.displayViewPage(viewPager.getCurrentItem()+1);
         }
     }
-    private void displayViewPage(int page){
+
+    @Override
+    public void setPage(int page) {
         this.page = page;
+    }
+
+    @Override
+    public void setText(int page) {
         tvPagerCounter.setText(page+"/"+2);
     }
 }
