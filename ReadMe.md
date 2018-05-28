@@ -3,7 +3,7 @@
 ## Contents 
 - ### 실행 동영상
 
-  - 준비중입니다.
+  - https://youtu.be/8iqy6Is1Jns
 
 - ### 설명
 
