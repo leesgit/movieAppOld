@@ -21,11 +21,14 @@ import com.lbc.practice.movieapp.data.PlayingMovieResult;
 import com.lbc.practice.movieapp.data.resource.MovieRepository;
 import com.lbc.practice.movieapp.view.favorite.FavoriteListActivity;
 import com.lbc.practice.movieapp.view.second.SecondActivity;
+import dagger.android.support.DaggerAppCompatActivity
+import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
+import javax.inject.Inject
 
 
-class MainActivity : AppCompatActivity(), MainContract.MainView {
+class MainActivity : DaggerAppCompatActivity(), MainContract.MainView {
     private var playingListAdapter: PlayingListAdapter? = null
     private var linearLayoutManager: LinearLayoutManager? = null
     private var page = 1
@@ -35,14 +38,17 @@ class MainActivity : AppCompatActivity(), MainContract.MainView {
     private val language = "ko"
 
     var toggle: ActionBarDrawerToggle?=null
-    var mainPresenter: MainPresenter?=null
 
+    @Inject
+    lateinit var mainPresenter :MainPresenter
+
+    @Inject
+    lateinit var disposeRetro : CompositeDisposable
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        mainPresenter = MainPresenter(MovieRepository.instance, this)
-
+        mainPresenter.takeView(this)
         setSupportActionBar(toolbar)
 
         toggle = ActionBarDrawerToggle(this, main_drawer, toolbar, R.string.drawer_open, R.string.drawer_close)
@@ -132,5 +138,10 @@ class MainActivity : AppCompatActivity(), MainContract.MainView {
         page++
         loading = false
         main_swiperefreshlayout!!.isRefreshing = false
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        disposeRetro.clear()
     }
 }

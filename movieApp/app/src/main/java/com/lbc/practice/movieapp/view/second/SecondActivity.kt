@@ -9,26 +9,29 @@ import android.widget.TextView;
 import com.lbc.practice.movieapp.R;
 import com.lbc.practice.movieapp.adapter.ImagePagerAdapter;
 import com.lbc.practice.movieapp.data.PlayingMovieResult;
+import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_second.*
+import javax.inject.Inject
 
 /**
  * Created by lbc on 2018-04-02.
  */
 
-class SecondActivity : AppCompatActivity(), ViewPager.OnPageChangeListener, SecondContract.SecondView {
+class SecondActivity : DaggerAppCompatActivity(), ViewPager.OnPageChangeListener, SecondContract.SecondView {
 
     private var imagePagerAdapter: ImagePagerAdapter? = null
     private var tvPagerCounter: TextView? = null
 
     private var page: Int = 0
-     var secondPresenter: SecondPresenter?=null
+
+    @Inject
+    lateinit var secondPresenter: SecondPresenter
 
      var resultsBean: PlayingMovieResult.ResultsBean?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_second)
-
-        secondPresenter = SecondPresenter(this)
+        secondPresenter.secondView = this
         val intent = intent
         resultsBean = intent.getSerializableExtra("movieInfo") as PlayingMovieResult.ResultsBean
 

@@ -16,12 +16,16 @@ import com.lbc.practice.movieapp.data.resource.MovieRepository;
 import com.lbc.practice.movieapp.data.resource.local.AppDatabase;
 import com.lbc.practice.movieapp.view.main.MainActivity;
 import com.lbc.practice.movieapp.view.second.SecondActivity;
+import dagger.android.support.DaggerAppCompatActivity
+import javax.inject.Inject
 
-class FavoriteListActivity : AppCompatActivity(), FavoriteListContract.FavoriteView {
+class FavoriteListActivity : DaggerAppCompatActivity(), FavoriteListContract.FavoriteView {
     private var playingListAdapter: PlayingListAdapter? = null
     private var linearLayoutManager: LinearLayoutManager? = null
     private var appDatabase: AppDatabase? = null
-    private var favoriteListPresenter: FavoriteListPresenter? = null
+
+    @Inject
+    lateinit var favoriteListPresenter: FavoriteListPresenter
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,7 +33,7 @@ class FavoriteListActivity : AppCompatActivity(), FavoriteListContract.FavoriteV
         setContentView(R.layout.activity_favorite_list)
         appDatabase = AppDatabase.getsInstance(applicationContext)
 
-        favoriteListPresenter = FavoriteListPresenter(MovieRepository.instance, this)
+        favoriteListPresenter.takeView(this)
 
         val recyclerView = findViewById<RecyclerView>(R.id.favorite_recyclerview) as RecyclerView
         linearLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)

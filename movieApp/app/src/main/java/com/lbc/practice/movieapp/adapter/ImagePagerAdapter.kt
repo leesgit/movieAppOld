@@ -15,9 +15,7 @@ import com.bumptech.glide.Glide;
 class ImagePagerAdapter : PagerAdapter() {
     public var imageUrls = arrayOfNulls<String>(2)
 
-//    fun setImageUrls(imageUrls : Array<String?>) {
-//        this.imageUrls = imageUrls
-//    }
+
 
     override fun getCount(): Int {
         return imageUrls.size

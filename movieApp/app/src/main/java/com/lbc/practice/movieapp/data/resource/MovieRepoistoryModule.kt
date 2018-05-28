@@ -5,17 +5,20 @@ import com.lbc.practice.movieapp.data.resource.remote.MovieRemoteDataSource;
 
 import dagger.Binds;
 import dagger.Module;
+import javax.inject.Singleton
 
 @Module
 abstract class MovieRepoistoryModule {
 
 
+    @Singleton
     @Binds
     @LocalScope
-    internal abstract fun provideMoiveLocal(movieLocalDataSource: MovieLocalDataSource): MovieDataSource
+    internal abstract fun provideLocalDataSource(movieLocalDataSource: MovieLocalDataSource): MovieDataSource
 
+    @Singleton
     @Binds
     @RemoteScope
-    internal abstract fun provideMoiveRemote(movieLocalDataSource: MovieRemoteDataSource): MovieRemoteDataSource
+    abstract fun provideRemoteDataSource(movieRemoteDataSource: MovieRemoteDataSource): MovieDataSource
 
 }

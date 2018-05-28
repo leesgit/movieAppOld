@@ -17,5 +17,6 @@ interface FavoriteListContract {
         fun setPlayingAdaterModel(model: PlayingListContract.PlayingModel)
         fun setPlayingAdaterView(view: PlayingListContract.View)
         fun favoriteInfo(context: Context)
+        fun takeView(view: FavoriteListContract.FavoriteView)
     }
 }

@@ -6,17 +6,31 @@ import com.lbc.practice.movieapp.adapter.PlayingListContract;
 import com.lbc.practice.movieapp.callback.OnItemClickListener
 import com.lbc.practice.movieapp.data.PlayingMovieResult;
 import com.lbc.practice.movieapp.data.resource.MovieDataSource;
+import com.lbc.practice.movieapp.data.resource.MovieRepository
 
 import java.util.ArrayList;
+import javax.inject.Inject
 
-class MainPresenter(internal var movieDataSource: MovieDataSource, internal var mainView: MainContract.MainView) : MainContract.MainPre {
+class MainPresenter : MainContract.MainPre {
+
+
     var adapterView: PlayingListContract.View?=null
     var adapterModel: PlayingListContract.PlayingModel?=null
     var resultsBeans: MutableList<PlayingMovieResult.ResultsBean>?=null
+    var mainView : MainContract.MainView ?= null
+    var movieDataSource: MovieDataSource
 
+    @Inject
+    constructor(movieRepository : MovieRepository) {
+        movieDataSource =movieRepository
+    }
 
     init {
         resultsBeans = ArrayList()
+    }
+
+    override fun takeView(mainView: MainContract.MainView) {
+        this.mainView = mainView
     }
 
     override fun movieInfo(apiKey: String, language: String, page: Int) {
@@ -27,11 +41,11 @@ class MainPresenter(internal var movieDataSource: MovieDataSource, internal var 
                 resultsBeans?.addAll(movieInfo)
                 adapterModel?.addMovieInfo(resultsBeans!!)
                 adapterView?.notifyAdapter()
-                mainView.increasePageCount()
+                mainView!!.increasePageCount()
             }
 
             override fun onFailData(errorMsg: String) {
-                mainView.errorMassage(errorMsg)
+                mainView!!.errorMassage(errorMsg)
             }
         })
     }
@@ -45,7 +59,7 @@ class MainPresenter(internal var movieDataSource: MovieDataSource, internal var 
         this.adapterView = view
         adapterView?.setOnclickListener(object : OnItemClickListener {
             override fun onItemClick(position: Int) {
-                mainView.moveToSecond(resultsBeans!!.get(position))
+                mainView!!.moveToSecond(resultsBeans!!.get(position))
             }
         })
 

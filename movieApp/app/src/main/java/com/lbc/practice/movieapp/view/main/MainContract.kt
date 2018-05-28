@@ -16,5 +16,6 @@ interface MainContract {
         fun setPlayingAdaterModel(model: PlayingListContract.PlayingModel)
         fun setPlayingAdaterView(view: PlayingListContract.View)
         fun movieInfo(apiKey: String, language: String, page: Int)
+        fun takeView(mainView: MainContract.MainView)
     }
 }

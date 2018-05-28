@@ -10,5 +10,7 @@ interface SecondContract {
 
     interface SecondPresent {
         fun displayViewPage(page: Int)
+        fun takeView(secondView: SecondContract.SecondView)
+
     }
 }

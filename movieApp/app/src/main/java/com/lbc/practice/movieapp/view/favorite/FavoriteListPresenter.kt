@@ -6,19 +6,33 @@ import com.lbc.practice.movieapp.adapter.PlayingListContract;
 import com.lbc.practice.movieapp.callback.OnItemClickListener;
 import com.lbc.practice.movieapp.data.PlayingMovieResult;
 import com.lbc.practice.movieapp.data.resource.MovieDataSource;
+import com.lbc.practice.movieapp.data.resource.MovieRepository
 
 import java.util.ArrayList;
+import javax.inject.Inject
 
-class FavoriteListPresenter(internal var movieDataSource: MovieDataSource, internal var favoriteView: FavoriteListContract.FavoriteView) : FavoriteListContract.FavoritePre {
+class FavoriteListPresenter : FavoriteListContract.FavoritePre {
+
+
     var adapterView: PlayingListContract.View? = null
     var adapterModel: PlayingListContract.PlayingModel? = null
-    internal var resultsBeans: MutableList<PlayingMovieResult.ResultsBean>
+    var resultsBeans: MutableList<PlayingMovieResult.ResultsBean>
+    var favoriteView: FavoriteListContract.FavoriteView? =null
 
+    var movieDataSource: MovieDataSource
+
+    @Inject
+    constructor(movieRepository : MovieRepository) {
+        movieDataSource =movieRepository
+    }
 
     init {
         resultsBeans = ArrayList()
     }
 
+    override fun takeView(view: FavoriteListContract.FavoriteView) {
+        this.favoriteView = view
+    }
     override fun setPlayingAdaterModel(model: PlayingListContract.PlayingModel) {
         this.adapterModel = model
     }
@@ -27,7 +41,7 @@ class FavoriteListPresenter(internal var movieDataSource: MovieDataSource, inter
         this.adapterView = view
         adapterView!!.setOnclickListener(object : OnItemClickListener {
             override fun onItemClick(position: Int) {
-                favoriteView.moveToSecond(resultsBeans[position])
+                favoriteView!!.moveToSecond(resultsBeans[position])
             }
         })
     }

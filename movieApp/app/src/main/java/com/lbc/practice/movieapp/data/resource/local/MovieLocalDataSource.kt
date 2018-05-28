@@ -8,8 +8,12 @@ import com.lbc.practice.movieapp.data.resource.MovieDataSource;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.inject.Inject
 
 class MovieLocalDataSource : MovieDataSource {
+
+    @Inject
+    constructor()
 
     internal var movieList: MutableList<PlayingMovieResult.ResultsBean> = ArrayList()
 
